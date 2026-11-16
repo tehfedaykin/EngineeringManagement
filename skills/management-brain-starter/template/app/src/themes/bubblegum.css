@@ -1,0 +1,3 @@
+/* The base styles.css already is the 90s pink look; this only adds the logo's sparkles. */
+.brand::before { content: '💖 '; }
+.brand::after { content: ' ✨'; }
