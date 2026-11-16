@@ -33,13 +33,25 @@ Superhuman, Google Calendar); the skill turns off screens for connectors you don
 
 ### Themes
 
-- `golden-city` (default): a pixel town with grass, dirt paths, little houses and a sprout mascot.
-  All original pixel art, drawn by `pixel_art.py`.
-- `bubblegum`: 90s pink.
+The setup interview shows these side by side so you can pick one.
+
+**`golden-city`** (default): a pixel town with grass, dirt paths, little houses, brick shop-sign titles and a sprout mascot. All original pixel art, drawn by `pixel_art.py`.
 
 | | |
 |---|---|
 | ![Team list](skills/management-brain-starter/examples/golden-city-team.jpg) | ![A team member's page](skills/management-brain-starter/examples/golden-city-team-member.jpg) |
+
+**`y2k-petsite`**: an early-2000s virtual-pet site. Pastel sparkle tiles, a bubbly title, yellow beveled buttons, a scrolling welcome ticker, a "best viewed at 800×600" badge and Pip, an original pixel pet.
+
+| | |
+|---|---|
+| ![Matrix in y2k-petsite](skills/management-brain-starter/examples/y2k-petsite-matrix.jpg) | ![A team member's page in y2k-petsite](skills/management-brain-starter/examples/y2k-petsite-team-member.jpg) |
+
+**`bubblegum`**: a 90s pink toy-ad look with script titles, glossy pills and sparkles.
+
+| | |
+|---|---|
+| ![Matrix in bubblegum](skills/management-brain-starter/examples/bubblegum-matrix.jpg) | ![A team member's page in bubblegum](skills/management-brain-starter/examples/bubblegum-team-member.jpg) |
 
 The people in the screenshots are made up.
 

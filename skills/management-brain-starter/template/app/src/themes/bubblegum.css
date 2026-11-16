@@ -1,3 +1,7 @@
 /* The base styles.css already is the 90s pink look; this only adds the logo's sparkles. */
 .brand::before { content: '💖 '; }
 .brand::after { content: ' ✨'; }
+
+/* The base theme paints sparkles on body, which is only as tall as the content; stretch it so
+   short pages don't end in a plain band. */
+body { min-height: 100vh; }

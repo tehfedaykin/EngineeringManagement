@@ -1,6 +1,8 @@
-"""Build original pixel-art SVG data URIs for the golden-city theme and splice them into its CSS.
+"""Build original pixel-art SVG data URIs for a theme and splice them into its CSS.
 
-usage: python3 -I pixel_art.py <golden-city.css>
+usage: python3 -I pixel_art.py <themes/golden-city.css | themes/y2k-petsite.css>
+
+The theme is picked from the file name. Re-running replaces the generated block in place.
 """
 import sys
 import urllib.parse
@@ -172,9 +174,9 @@ def town_strip():
     return f"<svg xmlns='http://www.w3.org/2000/svg' width='176' height='42' shape-rendering='crispEdges'>{''.join(parts)}</svg>"
 
 
-START, END = "/* --- town details: start --- */", "/* --- town details: end --- */"
-
-css = f"""{START}
+def golden_city_css():
+    START, END = "/* --- town details: start --- */", "/* --- town details: end --- */"
+    return START, END, f"""{START}
 /* Original pixel art (hand-built SVG): grass with dirt paths and a few flowers, a row of houses
    and trees under the top bar, a tree line along the bottom edge, and a sprout mascot by the logo. */
 :root {{ --backdrop: {GRASS}; }}
@@ -228,9 +230,103 @@ main {{ padding-bottom: 56px; }}
 {END}
 """
 
+
+
+# ---- y2k-petsite: an early-2000s virtual-pet-site look, all original art ----
+
+Y2K_PAL = {
+    "K": "#1d2a5a",  # outline
+    "C": "#5ec8e8", "c": "#2a8ab0",  # pet body / shade
+    "W": "#ffffff", "E": "#1d2a5a",  # eye white / pupil
+    "Y": "#ffd23f", "y": "#e0a800",  # star
+    "P": "#ff9ec8",  # cheeks
+}
+
+# Pip: an original round pet with star-tipped antennae.
+PET = [
+    "..Y.........Y...",
+    ".YyY.......YyY..",
+    "..YK.......KY...",
+    "...K.......K....",
+    "....KKKKKKKK....",
+    "..KKCCCCCCCCKK..",
+    ".KCCCCCCCCCCCCK.",
+    ".KCWWECCCCWWECK.",
+    "KCCWEECCCCWEECCK",
+    "KCCCCCCCCCCCCCcK",
+    "KCPPCCCKKCCCPPcK",
+    "KCCCCCCCCCCCCccK",
+    ".KCCCCCCCCCCccK.",
+    "..KccCCCCCCccK..",
+    "..KKKK.KK.KKKK..",
+    "................",
+]
+
+SPARKLE = ["..Y..", "..Y..", "YYyYY", "..Y..", "..Y.."]
+
+
+def y2k_svg(rows, scale=2, ox=0, oy=0):
+    saved = dict(PAL)
+    PAL.clear(); PAL.update(Y2K_PAL)
+    try:
+        return svg(rows, scale=scale, ox=ox, oy=oy)
+    finally:
+        PAL.clear(); PAL.update(saved)
+
+
+def star_tile():
+    """96x96 pastel tile: two sparkles and a few white dots, offset so the repeat isn't a grid."""
+    parts = []
+    for rows, x, y in [(SPARKLE, 12, 14), (SPARKLE, 60, 58)]:
+        inner = y2k_svg(rows, scale=2, ox=x, oy=y)
+        parts.append(inner[inner.index(">") + 1 : -len("</svg>")])
+    dots = "".join(rect(x, y, 2, 2, "#ffffff") for x, y in [(44, 20), (82, 36), (26, 70), (70, 8), (8, 50)])
+    return tile(96, 96, rect(0, 0, 96, 96, "#cfe6ff") + dots + "".join(parts))
+
+
+def y2k_css():
+    START, END = "/* --- petsite details: start --- */", "/* --- petsite details: end --- */"
+    return START, END, f"""{START}
+/* Original pixel art (hand-built SVG): a sparkle tile for the page and Pip, the site's pet. */
+html:root {{
+  background-color: #cfe6ff;
+  background-image: {uri(star_tile())};
+  background-size: 96px 96px;
+}}
+.brand::before {{
+  content: '';
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  vertical-align: -8px;
+  background: {uri(y2k_svg(PET, scale=2))} no-repeat center / 32px 32px, #fff;
+  border: 2px solid #1d2a5a;
+  border-radius: 50%;
+}}
+/* Pip sits on the Monitor box, watching. */
+.q-monitor::before {{
+  content: '';
+  position: absolute;
+  top: -30px;
+  left: 170px;
+  width: 32px;
+  height: 32px;
+  background: {uri(y2k_svg(PET, scale=2))} no-repeat;
+}}
+{END}
+"""
+
+
+THEMES = {"golden-city": golden_city_css, "y2k-petsite": y2k_css}
+
 path = Path(sys.argv[1])
+theme = path.stem
+if theme not in THEMES:
+    raise SystemExit(f"No pixel art for theme {theme!r}; known: {', '.join(THEMES)}")
+START, END, css = THEMES[theme]()
 text = path.read_text()
 if START in text:
     text = text[: text.index(START)] + text[text.index(END) + len(END) + 1 :]
 path.write_text(text.rstrip("\n") + "\n\n" + css)
-print("ok", len(css))
+print("ok", theme, len(css))

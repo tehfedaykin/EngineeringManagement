@@ -18,6 +18,7 @@ TEMPLATE = HERE / "template"
 THEME_FONTS = {
     "golden-city": "https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap",
     "bubblegum": "https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@400;500;600;700&display=swap",
+    "y2k-petsite": "https://fonts.googleapis.com/css2?family=Chewy&display=swap",
 }
 
 # Screen -> (route files to delete, nav paths to remove)

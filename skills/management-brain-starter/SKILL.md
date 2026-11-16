@@ -28,8 +28,10 @@ Never guess a value you can't confirm; leave it blank and say what it affects.
 **About them**
 - Full name, first name, work email, role (e.g. "engineering manager"), company, team name, timezone (IANA, e.g. `America/New_York`).
 - Where to create the app (default `~/Repos/my-management-brain`; it must not exist yet).
-- Theme: `golden-city` (default: grass and dirt paths, brick shop-sign titles, cream signboards, pixel fonts) or `bubblegum` (90s pink).
-  Show them the screenshots in `examples/` (read them with `Read`) so they can see golden-city first.
+- Theme: `golden-city` (default: grass and dirt paths, little houses, brick shop-sign titles, cream
+  signboards, pixel fonts), `y2k-petsite` (early-2000s virtual-pet site: pastel sparkle tiles, bubbly
+  title, yellow beveled buttons, a welcome ticker and Pip the pet) or `bubblegum` (90s pink toy-ad look).
+  Show them the screenshots in `examples/` (read them with `Read`) so they can compare the themes before picking.
 
 **Team members.** For each direct report: name, title, start date (YYYY-MM-DD, optional) and career goals
 (optional, Markdown). Offer to look them up first:
